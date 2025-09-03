@@ -12,7 +12,7 @@ import { promisify } from 'util';
 const execPromise = promisify(exec);
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: '.env.local' });
 
 const LOCAL_DB_URI = process.env.DATABASE_URI;
 const REMOTE_DB_URI = process.env.STAGING_DATABASE_URI;

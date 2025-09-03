@@ -5,7 +5,13 @@ import { fileURLToPath } from 'url';
 import config from '../src/payload.config';
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: '.env.local' });
+
+// Ensure APP_SECRET is set
+if (!process.env.APP_SECRET) {
+  console.error('APP_SECRET is not set in environment variables');
+  process.exit(1);
+}
 
 /**
  * Seed function to populate the database with initial data

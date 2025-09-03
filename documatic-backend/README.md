@@ -6,7 +6,7 @@ There are two databases: `dev`, which is a remote instance which contains a stab
 
 - `pnpm dev:local` -> runs Payload connected to the local database running on Docker.
 - `pnpm dev:remote` -> runs Payload connected to the remote database.
-- `pnpm db:reseed` does:
+- `pnpm db:reset` does:
   - Completely erase your local database.
   - Pulls the schema from the remote database and imports it into your local database.
   - Runs the `src/migrations/fresh-seed.sql` and imports its contents into your local database — The seed data contains 2 tenants and their respective users for each role: `tenant-owner`, `tenant-admin`, `tenant-manager`, `tenant-user`, `tenant-external-user`. All of them with password `12345678!,`.

@@ -20,6 +20,7 @@
     "docker:down": "docker-compose -f docker-compose.local.yml down",
     "db:reset": "payload migrate:fresh",
     "db:seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
+    "db:reseed": "cross-env NODE_OPTIONS=--no-deprecation node scripts/db-reseed.js",
     "ci-build": "payload generate:types && payload migrate && pnpm build"
   },
   "dependencies": {
