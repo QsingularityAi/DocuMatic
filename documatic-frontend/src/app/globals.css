@@ -80,11 +80,34 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Page container utilities */
+  .page-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }

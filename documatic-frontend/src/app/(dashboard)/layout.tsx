@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
-import { Sidebar } from '@/components/layout/sidebar'
+import Sidebar from '@/components/layout/sidebar'
 import { Header } from '@/components/layout/header'
 
 export default function DashboardLayout({
@@ -37,13 +37,15 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-screen flex bg-gray-50">
       <Sidebar />
-      <div className="lg:pl-72">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <main className="py-10">
-          <div className="px-4 sm:px-6 lg:px-8">
-            {children}
+        <main className="flex-1 overflow-auto">
+          <div className="h-full py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+              {children}
+            </div>
           </div>
         </main>
       </div>
