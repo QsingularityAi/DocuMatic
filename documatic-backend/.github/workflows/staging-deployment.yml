@@ -1,0 +1,62 @@
+name: CD Staging
+
+on:
+  workflow_run:
+    workflows: ['CI Staging']
+    types:
+      - completed
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install doctl
+        run: sudo snap install doctl
+
+      - name: Authenticate doctl
+        env:
+          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_API_KEY }}
+        run: doctl auth init -t "$DIGITALOCEAN_TOKEN"
+
+      - name: Trigger deployment
+        run: |
+          APP_ID="b2d77a9b-5531-406f-9fd1-6d1c2f2d93ae"
+          doctl apps create-deployment $APP_ID
+
+      - name: Notify Zulip of success
+        if: success()
+        uses: zulip/github-actions-zulip/send-message@v1
+        with:
+          api-key: ${{ secrets.ZULIP_API_KEY }}
+          email: 'github-bot@documatic.zulipchat.com'
+          organization-url: 'https://documatic.zulipchat.com'
+          to: 'devops'
+          type: stream
+          topic: '🚀 deployments'
+          content: |
+            ✅ **APP-BACK** — **Staging** deployment succeeded! 🎉
+
+            • **Commit**: [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+            • **By**: [@${{ github.actor }}](${{ github.server_url }}/${{ github.actor }})
+            • **Logs**: [View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+      - name: Notify Zulip of failure
+        if: failure()
+        uses: zulip/github-actions-zulip/send-message@v1
+        with:
+          api-key: ${{ secrets.ZULIP_API_KEY }}
+          email: 'github-bot@documatic.zulipchat.com'
+          organization-url: 'https://documatic.zulipchat.com'
+          type: stream
+          to: 'devops'
+          topic: '🚀 deployments'
+          content: |
+            ❌ **APP-BACK** — **Staging** deployment failed! 🔥
+
+            • **Commit**: [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+            • **By**: [@${{ github.actor }}](${{ github.server_url }}/${{ github.actor }})
+            • **Logs**: [View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

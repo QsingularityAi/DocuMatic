@@ -1,0 +1,59 @@
+name: CI Staging
+
+on:
+  push:
+    branches: ['dev']
+  pull_request:
+    branches: ['dev']
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: staging
+
+    env:
+      NODE_ENV: production
+      APP_ENV: ${{ secrets.APP_ENV }}
+      APP_PROTOCOL: ${{ secrets.APP_PROTOCOL }}
+      APP_ENV_DOMAIN: ${{ secrets.APP_ENV_DOMAIN }}
+      APP_CORS_ORIGINS: ${{ secrets.APP_CORS_ORIGINS }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
+      DATABASE_SSL_CA: ${{ secrets.DATABASE_SSL_CA }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      UPLOADTHING_TOKEN: ${{ secrets.UPLOADTHING_TOKEN }}
+
+    steps:
+      - name: NODE_ENV
+        run: echo "NODE_ENV is $NODE_ENV"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --prod=false
+
+      - name: Generate Payload types
+        run: pnpm run generate:types
+
+      - name: Typescript check
+        run: pnpm type-check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build

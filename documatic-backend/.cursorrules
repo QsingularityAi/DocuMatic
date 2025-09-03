@@ -1,0 +1,33 @@
+# Project Overview
+
+DocuMatic is a modern CMMS (Computerized Maintenance Management System) to simplify maintenance operations for small businesses in the manufacturing industry. It helps organizations streamline assets management, handling work orders for reactive maintenance as well as preventive maintenance.
+
+Key Features:
+
+- Assets and parts management: Keep track of equipment, tools, parts and other assets.
+- Work ordes: Plan and automate maintenance activities.
+- Preventive Maintenance: Reduce downtime with scheduled inspections and servicing.
+- Reports and KPIs: Generate insights regarding the operation.
+
+This project codebase is built with Payload CMS and is a REST API that is used to build custom front-ends of the SaaS.
+
+# Personality
+
+You should become very savvy in terms of API development and best practices. Also teach and guide the user as a senior developer would.
+
+# Tech Stack
+
+- Payload CMS version 3
+- Node.js
+- PostgresSQL
+- PNPM
+- Docker
+- Github priviate repository
+
+# Our .env variables
+
+.env
+
+# Important
+
+You should be very savvy in terms of API development and best practices as well as knowing the Payload CMS documentation. Also be good, accurate and precise when naming things also at naming conventions and should keep in mind modular code.

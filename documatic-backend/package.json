@@ -1,0 +1,72 @@
+{
+  "name": "documatic-api",
+  "version": "1.0.0",
+  "description": "A blank template to get started with Payload 3.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "pnpm docker:up && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "ii": "cross-env NODE_OPTIONS=--no-deprecation pnpm --ignore-workspace install",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
+    "type-check": "tsc --noEmit",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "docker:up": "docker-compose -f docker-compose.local.yml up -d --remove-orphans",
+    "docker:down": "docker-compose -f docker-compose.local.yml down",
+    "db:reset": "payload migrate:fresh",
+    "db:seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
+    "ci-build": "payload generate:types && payload migrate && pnpm build"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "^3.7.0",
+    "@payloadcms/email-resend": "^3.7.0",
+    "@payloadcms/next": "^3.7.0",
+    "@payloadcms/payload-cloud": "^3.7.0",
+    "@payloadcms/plugin-multi-tenant": "^3.7.0",
+    "@payloadcms/richtext-lexical": "^3.7.0",
+    "@payloadcms/storage-uploadthing": "^3.7.0",
+    "@types/luxon": "^3.6.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "graphql": "^16.10.0",
+    "luxon": "^3.6.1",
+    "next": "15.3.0",
+    "payload": "^3.7.0",
+    "qrcode": "^1.5.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "sharp": "0.33.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@types/node": "^22.13.8",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.2",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "15.3.0",
+    "tsx": "^4.19.3",
+    "typescript": "5.8.2"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    },
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+  }
+}
